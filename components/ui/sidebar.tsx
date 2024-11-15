@@ -18,7 +18,7 @@ export default function Sidebar() {
     
   return (
  
-    <aside className="w-64 bg-white h-screen shadow-md">
+    <aside className="w-64 md:block hidden bg-white h-screen shadow-md">
     <div className="p-4">
       <h1 className="text-2xl font-bold text-black">Hotel Ranking</h1>
     </div>

@@ -34,9 +34,7 @@ Hotels Ranking Dashboard is a web application that allows users to manage and ra
 
 2. Install dependencies:
    ```
-   npm install
-   # or
-   yarn install
+  npm install --legacy-peer-deps 
    ```
 
 3. Create a `.env.local` file in the root directory and add any necessary environment variables.

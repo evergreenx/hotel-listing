@@ -13,14 +13,20 @@ import CategoryModal from "@/components/CategoryModal";
 import { Hotel, Category } from "@/types";
 import { useGetCountriesQuery } from "@/lib/services/api";
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PlusCircleIcon } from "lucide-react";
+
 export default function Dashboard() {
   const dispatch = useDispatch();
   const hotels = useSelector((state: RootState) => state.hotels.hotels);
+
   const categories = useSelector(
     (state: RootState) => state.categories.categories
   );
   const [isHotelModalOpen, setIsHotelModalOpen] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+
+  const [activeTab, setActiveTab] = useState("hotels");
   const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(
     undefined
   );
@@ -69,28 +75,53 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <main className="container mx-auto p-4">
       <h1 className="text-4xl font-bold mb-8"> Dashboard</h1>
-      <div className="grid grid-cols-1  gap-8">
-        <div>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold">Hotels</h2>
-            <Button onClick={handleAddHotel}>Add Hotel</Button>
-          </div>
-          <HotelList
-            hotels={hotels}
-            categories={categories}
-            onEdit={handleEditHotel}
-          />
+
+
+
+        <div className="">
+
+
+          {/* Search form */}
+  
+
+          {/* Tabs for Hotels and Categories */}
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full"
+          >
+            <div className="flex justify-between items-center mb-4">
+              <TabsList>
+                <TabsTrigger value="hotels">Hotels</TabsTrigger>
+                <TabsTrigger value="categories">Categories</TabsTrigger>
+              </TabsList>
+              <Button
+                onClick={
+                  activeTab === "hotels" ? handleAddHotel : handleAddCategory
+                }
+              >
+                <PlusCircleIcon className="w-5 h-5 mr-2" />
+                Add {activeTab === "hotels" ? "Hotel" : "Category"}
+              </Button>
+            </div>
+            <TabsContent value="hotels">
+              <HotelList
+                hotels={hotels}
+                categories={categories}
+                onEdit={handleEditHotel}
+              />
+            </TabsContent>
+            <TabsContent value="categories">
+              <CategoryList
+                categories={categories}
+                onEdit={handleEditCategory}
+              />
+            </TabsContent>
+          </Tabs>
         </div>
-        <div>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold">Categories</h2>
-            <Button onClick={handleAddCategory}>Add Category</Button>
-          </div>
-          <CategoryList categories={categories} onEdit={handleEditCategory} />
-        </div>
-      </div>
+     
       <HotelModal
         isOpen={isHotelModalOpen}
         onClose={() => setIsHotelModalOpen(false)}
@@ -103,6 +134,6 @@ export default function Dashboard() {
         onClose={() => setIsCategoryModalOpen(false)}
         category={selectedCategory}
       />
-    </div>
+    </main>
   );
 }
