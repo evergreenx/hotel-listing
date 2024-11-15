@@ -32,12 +32,14 @@ Hotels Ranking Dashboard is a web application that allows users to manage and ra
    cd hotels-ranking-dashboard
    ```
 
-2. Install dependencies:
-   ```
-  npm install --legacy-peer-deps 
-   ```
 
-3. Create a `.env.local` file in the root directory and add any necessary environment variables.
+
+3. Install dependencies:
+
+```
+npm install --legacy-peer-deps 
+
+```
 
 4. Run the development server:
    ```
